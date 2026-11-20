@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <title>CHATVERSE — Kết nối mọi người</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="authScreen" class="auth-screen">
+    <div class="auth-card">
+      <div class="brand large"><span class="brand-mark">C</span><span>CHATVERSE</span></div>
+      <p class="muted center">Không gian trò chuyện của bạn</p>
+      <div class="auth-tabs">
+        <button class="tab active" data-auth="login">Đăng nhập</button>
+        <button class="tab" data-auth="signup">Tạo tài khoản</button>
+      </div>
+      <form id="authForm">
+        <label id="nameLabel" class="hidden">Tên hiển thị<input id="displayName" autocomplete="name" placeholder="Tên của bạn"></label>
+        <label>Email<input id="email" type="email" required autocomplete="email" placeholder="you@example.com"></label>
+        <label>Mật khẩu<input id="password" type="password" required minlength="6" autocomplete="current-password" placeholder="Ít nhất 6 ký tự"></label>
+        <button class="primary full" type="submit" id="authSubmit">Đăng nhập</button>
+      </form>
+      <p class="tiny muted center">Mật khẩu được Supabase Auth quản lý, không lưu trực tiếp trong website.</p>
+      <p id="authError" class="error"></p>
+    </div>
+  </div>
+
+  <div id="app" class="app hidden">
+    <aside class="sidebar">
+      <div class="side-head">
+        <div class="brand"><span class="brand-mark">C</span><span>CHATVERSE</span></div>
+        <button id="logoutBtn" class="icon-btn" title="Đăng xuất">↪</button>
+      </div>
+      <div class="profile-mini">
+        <div class="avatar" id="myAvatar">?</div>
+        <div class="profile-copy"><strong id="myName">Tài khoản</strong><small id="myId">ID: —</small></div>
+        <span class="online-dot"></span>
+      </div>
+      <div class="side-actions">
+        <button id="newGroupBtn" class="secondary">＋ Tạo nhóm</button>
+        <button id="addFriendBtn" class="secondary">＋ Kết bạn</button>
+      </div>
+      <div class="side-section">
+        <div class="section-title">TIN NHẮN <span>●</span></div>
+        <div id="conversationList" class="conversation-list">
+          <div class="empty-small">Chưa có cuộc trò chuyện.</div>
+        </div>
+      </div>
+      <div class="side-footer"><span class="status-pulse"></span> Đang kết nối</div>
+    </aside>
+
+    <main class="chat-area">
+      <header class="chat-header">
+        <div class="chat-heading">
+          <div id="chatAvatar" class="avatar chat-avatar">✦</div>
+          <div><h2 id="chatTitle">Chào mừng đến CHATVERSE</h2><p id="chatSubtitle">Chọn một cuộc trò chuyện để bắt đầu</p></div>
+        </div>
+        <div class="header-actions">
+          <button id="voiceBtn" class="icon-btn voice-btn" disabled title="Bắt đầu voice chat">🎙</button>
+          <button id="leaveVoiceBtn" class="icon-btn hidden" title="Rời voice chat">⏹</button>
+        </div>
+      </header>
+      <section id="welcome" class="welcome">
+        <div class="welcome-orb">✦</div>
+        <h1>Mọi cuộc trò chuyện,<br><span>một nơi kết nối.</span></h1>
+        <p>Tìm bạn bằng ID, tạo nhóm và trò chuyện bằng giọng nói.</p>
+      </section>
+      <section id="messageList" class="message-list hidden"></section>
+      <form id="messageForm" class="composer hidden">
+        <input id="messageInput" maxlength="4000" autocomplete="off" placeholder="Viết tin nhắn..." required>
+        <button class="send-btn" type="submit" aria-label="Gửi tin nhắn">➤</button>
+      </form>
+      <div id="voiceStatus" class="voice-status hidden"></div>
+    </main>
+  </div>
+
+  <dialog id="friendDialog" class="modal">
+    <form id="friendForm" method="dialog">
+      <div class="modal-top"><h3>Kết bạn bằng ID</h3><button class="close" value="cancel" formnovalidate>×</button></div>
+      <p class="muted">Nhập ID tài khoản của người bạn muốn kết bạn.</p>
+      <label>ID tài khoản<input id="friendId" placeholder="Ví dụ: CV-A1B2C3D4" required></label>
+      <button class="primary full" type="submit">Gửi lời mời</button>
+    </form>
+  </dialog>
+
+  <dialog id="groupDialog" class="modal">
+    <form id="groupForm" method="dialog">
+      <div class="modal-top"><h3>Tạo nhóm chat</h3><button class="close" value="cancel" formnovalidate>×</button></div>
+      <label>Tên nhóm<input id="groupName" maxlength="50" placeholder="Nhóm bạn thân" required></label>
+      <label>Thêm bạn bằng ID <span class="muted">(có thể bỏ trống)</span><input id="groupMembers" placeholder="CV-XXXX, CV-YYYY"></label>
+      <button class="primary full" type="submit">Tạo nhóm</button>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
